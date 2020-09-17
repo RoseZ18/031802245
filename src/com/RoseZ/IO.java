@@ -1,13 +1,16 @@
 package com.RoseZ;
-import java.io.PrintStream;
+import java.io.*;
 import java.io.FileNotFoundException;
 public class IO {
     public static void output(String outputPath, String result) {
-
-        try {
-            System.setOut(new PrintStream(outputPath));//把创建的打印输出流赋给系统。即系统下次向 ps输出
-            System.out.println(result);
-        } catch (FileNotFoundException e) {
+        File f = new File(outputPath);
+        try (FileWriter fr = new FileWriter(f)) {
+            String data = result;
+            char[] cs = data.toCharArray();
+            fr.write(cs);
+            fr.close();
+            System.out.println("结果已写入" + outputPath);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
