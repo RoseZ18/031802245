@@ -5,7 +5,6 @@ import java.io.*;
 public class Txtprocess {
     private static final String html_seperator="<br>";
     private static final String sentence_seperator="[,.;!:，。；!：]";
-    //
     public static String[] split(String src)
     {
         List<String> result=new ArrayList<>();
@@ -30,29 +29,19 @@ public class Txtprocess {
         return src.replaceAll("[^a-zA-Z0-9\\u4e00-\\u9fa5]","");
     }
     public static String ReadtoString(String filepath){
-        Reader reader = null;
-        BufferedReader br = null;
-        String data = null;
-        StringBuffer sb = new StringBuffer();
+        String str=" ";
+        File file = new File(filepath);
         try {
-            reader = new FileReader(filepath);
-            br = new BufferedReader(reader);
-            while ((data = br.readLine()) != null) {
-                sb.append(data);
-            }
-        }
-        catch (IOException e) {
+            FileInputStream input=new FileInputStream(filepath);
+            int size =input.available();
+            byte[] buffer=new byte[size];
+            input.read(buffer);
+            input.close();
+            str=new String(buffer,"UTF-8");
+        }catch(IOException e){
             e.printStackTrace();
         }
-        finally {
-            try {
-                reader.close();
-                br.close();
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.reverse().toString();
+        return str;
     }
 
 }
